@@ -19,20 +19,20 @@
     Rental Code: <input type="text" name="rentalCode" required><br>
     Status:
     <select name="status">
-        <option value="Trống">Trống</option>
-        <option value="Hạ tầng">Hạ tầng</option>
-        <option value="Đầy đủ">Đầy đủ</option>
+        <option value="Empty">Trống</option>
+        <option value="Util">Hạ tầng</option>
+        <option value="Full">Đầy đủ</option>
     </select><br>
     Area (m²): <input type="number" name="area" min="20" required><br>
     Floor: <input type="number" name="floor" min="1" max="15" required><br>
     Rental Type:
     <select name="rentalType">
-        <option value="Văn phòng chia sẻ">Văn phòng chia sẻ</option>
-        <option value="Văn phòng trọn gói">Văn phòng trọn gói</option>
+        <option value="Share office">Văn phòng chia sẻ</option>
+        <option value="Full office">Văn phòng trọn gói</option>
     </select><br>
     Price (VNĐ): <input type="number" name="price" min="1000000" required><br>
-    Start Date (dd/mm/yyyy): <input type="text" name="startDate" required><br>
-    End Date (dd/mm/yyyy): <input type="text" name="endDate" required><br>
+    Start Date (dd/mm/yyyy): <input type="date" name="startDate" required><br>
+    End Date (dd/mm/yyyy): <input type="date" name="endDate" required><br>
     <button type="submit">Add Rental</button>
 </form>
 </body>

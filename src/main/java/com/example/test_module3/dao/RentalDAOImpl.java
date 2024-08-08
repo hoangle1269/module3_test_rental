@@ -3,7 +3,7 @@ package com.example.test_module3.dao;
 import com.example.test_module3.dto.RentalDTO;
 
 import java.sql.*;
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +22,11 @@ public class RentalDAOImpl implements RentalDAO {
             stmt.setInt(4, rental.getFloor());
             stmt.setString(5, rental.getRentalType());
             stmt.setBigDecimal(6, rental.getPrice());
-            stmt.setDate(7, Date.valueOf(rental.getStartDate()));
-            stmt.setDate(8, Date.valueOf(rental.getEndDate()));
+            stmt.setDate(7, rental.getStartDate());
+            stmt.setDate(8, rental.getEndDate());
             stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -43,8 +45,8 @@ public class RentalDAOImpl implements RentalDAO {
                         rs.getInt("floor"),
                         rs.getString("rental_type"),
                         rs.getBigDecimal("price"),
-                        rs.getDate("start_date").toLocalDate(),
-                        rs.getDate("end_date").toLocalDate()
+                        rs.getDate("start_date"),
+                        rs.getDate("end_date")
                 );
                 rentals.add(rental);
             }
@@ -70,8 +72,8 @@ public class RentalDAOImpl implements RentalDAO {
                             rs.getInt("floor"),
                             rs.getString("rental_type"),
                             rs.getBigDecimal("price"),
-                            rs.getDate("start_date").toLocalDate(),
-                            rs.getDate("end_date").toLocalDate()
+                            rs.getDate("start_date"),
+                            rs.getDate("end_date")
                     );
                     rentals.add(rental);
                 }
@@ -119,8 +121,8 @@ public class RentalDAOImpl implements RentalDAO {
             stmt.setInt(3, rental.getFloor());
             stmt.setString(4, rental.getRentalType());
             stmt.setBigDecimal(5, rental.getPrice());
-            stmt.setDate(6, java.sql.Date.valueOf(rental.getStartDate()));
-            stmt.setDate(7, java.sql.Date.valueOf(rental.getEndDate()));
+            stmt.setDate(6, rental.getStartDate());
+            stmt.setDate(7, rental.getEndDate());
             stmt.setString(8, rental.getRentalCode());
 
             stmt.executeUpdate();

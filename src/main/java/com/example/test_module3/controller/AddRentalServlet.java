@@ -11,17 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
+import java.sql.Date;
+import java.time.format.DateTimeParseException;
+
 
 @WebServlet(name = "addRentalServlet", urlPatterns = "/addRental")
 public class AddRentalServlet extends HttpServlet {
 
     private RentalDAO rentalDAO = new RentalDAOImpl();
 
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/WEB-INF/views/addRental.jsp").forward(req, resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             String rentalCode = request.getParameter("rentalCode");
@@ -30,39 +33,31 @@ public class AddRentalServlet extends HttpServlet {
             int floor = Integer.parseInt(request.getParameter("floor"));
             String rentalType = request.getParameter("rentalType");
             BigDecimal price = new BigDecimal(request.getParameter("price"));
-            String startDateStr = request.getParameter("startDate");
-            String endDateStr = request.getParameter("endDate");
+            Date startDate  = Date.valueOf(request.getParameter("startDate"));
+            Date endDate  = Date.valueOf(request.getParameter("endDate"));
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate startDate = LocalDate.parse(startDateStr, formatter);
-            LocalDate endDate = LocalDate.parse(endDateStr, formatter);
 
-            RentalDTO rental = new RentalDTO(rentalCode, status, area, floor, rentalType, price, startDate, endDate);
+            RentalDTO rental = new RentalDTO(rentalCode, status, (float) area, floor, rentalType, price, startDate, endDate);
 
-            // Check if rental code exists
-            if (rentalDAO.getRentalByCode(rentalCode)) {
-                request.setAttribute("errorMessage", "Rental code already exists.");
-                request.getRequestDispatcher("/WEB-INF/views/addRental.jsp").forward(request, response);
-                return;
-            }
+//            if (rentalDAO.getRentalByCode(rentalCode)) {
+//                request.setAttribute("errorMessage", "Rental code already exists.");
+//                request.getRequestDispatcher("/WEB-INF/views/addRental.jsp").forward(request, response);
+//                return;
+//            }
 
-            // Add rental to database
             rentalDAO.addRental(rental);
 
-            // Redirect to list rentals page
             response.sendRedirect(request.getContextPath() + "/listRentals");
 
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            request.setAttribute("errorMessage", "Invalid number format.");
+            request.getRequestDispatcher("/WEB-INF/views/addRental.jsp").forward(request, response);
+        } catch (DateTimeParseException e) {
             request.setAttribute("errorMessage", "Invalid date format.");
             request.getRequestDispatcher("/WEB-INF/views/addRental.jsp").forward(request, response);
         } catch (Exception e) {
-            e.printStackTrace();
             request.setAttribute("errorMessage", "Failed to add rental: " + e.getMessage());
             request.getRequestDispatcher("/WEB-INF/views/addRental.jsp").forward(request, response);
         }
     }
-
 }
-
-

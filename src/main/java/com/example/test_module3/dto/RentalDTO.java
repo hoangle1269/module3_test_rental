@@ -1,6 +1,7 @@
 package com.example.test_module3.dto;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class RentalDTO {
@@ -10,11 +11,11 @@ public class RentalDTO {
     private int floor;
     private String rentalType;
     private BigDecimal price;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Date startDate;
+    private Date endDate;
 
 
-    public RentalDTO(String rentalCode, String status, double area, int floor, String rentalType, BigDecimal price, LocalDate startDate, LocalDate endDate) {
+    public RentalDTO(String rentalCode, String status, double area, int floor, String rentalType, BigDecimal price, Date startDate, Date endDate) {
         this.rentalCode = rentalCode;
         this.status = status;
         this.area = (float) area;
@@ -73,19 +74,19 @@ public class RentalDTO {
         this.price = price;
     }
 
-    public LocalDate getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 }

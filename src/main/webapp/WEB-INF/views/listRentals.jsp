@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -34,6 +34,12 @@
         <th>Start Date</th>
         <th>End Date</th>
         <th>Action</th>
+        <td>
+            <form action="${pageContext.request.contextPath}/addRental" method="post">
+                <input type="hidden" name="rentalCode" value="${rental.rentalCode}">
+                <button type="submit">Add</button>
+            </form>
+        </td>
     </tr>
     <c:forEach items="${rentals}" var="rental">
         <tr>
@@ -46,11 +52,12 @@
             <td>${rental.startDate}</td>
             <td>${rental.endDate}</td>
             <td>
-                <form action="${pageContext.request.contextPath}/updateRental" method="get">
-                    <input type="hidden" name="rentalCode" value="${rental.rentalCode}">
-                    <button type="submit">Update</button>
-                </form>
-                <form action="${pageContext.request.contextPath}/deleteRental" method="post" onsubmit="return confirmDelete('${rental.rentalCode}')">
+<%--                <form action="${pageContext.request.contextPath}/updateRental" method="get">--%>
+<%--                    <input type="hidden" name="rentalCode" value="${rental.rentalCode}">--%>
+<%--                    <button type="submit">Update</button>--%>
+<%--                </form>--%>
+                <form action="${pageContext.request.contextPath}/deleteRental" method="post"
+                      onsubmit="return confirmDelete('${rental.rentalCode}')">
                     <input type="hidden" name="rentalCode" value="${rental.rentalCode}">
                     <button type="submit">Delete</button>
                 </form>
